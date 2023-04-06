@@ -12,18 +12,27 @@ Once in Jupyter Notebook, we still needed to make the dataset more manageable fo
 
 ![high_votes](link)
 
-Next, in order to search for bias, we really only needed to care about reviews which awarded products five star ratings.
+Since we are analyzing a program that essentially "pays" for reviews, we are most interested in the reviews which give products five star ratings since these are the most likely to show bias. Therefore, we used .loc and groupby to count the number of reviews, both "Paid" and "Unpaid", with 5.0 star_rating.
+```
+five_star =high_votes.loc[high_votes['star_rating'] == 5.0].groupby('vine').count()
+five_star["review_id"]
+```
 
-Bulleted list  & images of DataFrames as support
+![five_star_count](link)
 
-- How many Vine reviews and non-Vine reviews were there?
+Through our analysis we discovered
+- Out of 38,010 helpful reviews, only 170 of them were Vine reviews, or 0.45% while 99.55% (37,840) were non-Vine program reviews.
 
-- How many Vine reviews were 5 starts? How many non-Vine reviews were 5 stars?
+![total_reviews_count](link)
 
-- What percentage of Vine reviews were 5 starts? What percentage of non-Vine reviews were 5 stars?
+- Out of these reviews, only 65 of the Vine reviews gave the products five stars. In comparison, 20,612 of the non-Vine reviews gave the products five stars.
+
+![five_star_count](link)
+
+- The size of each category (Paid vs Unpaid) is vastly different, so we need to examine the percentage per category. The Vine reviews have only 38.54% five star reviews while 54.47% of the non-Vine reviews have five stars.
+
+![percent_five_star](link)
 
 ## Summary
 
-Is there any positivity bias for reviews in Vine program. Use results to support statement.
-
-Provide additional analysis you could do using dataset to support your statement.
+In conclusion, from analysis of this dataset there does not seem to be any positivity bias for the reviews in the Vine program since only 38.54% of the reviews are five star reviews compared to 54.47% of the non-Vine reviews. The participants in the Vine program seem more critical in their assessments of these products, but the sample is much smaller than the rest of the dataset. To provide a more thorough analysis, I suggest including four star reviews in the analysis since these also could contribute to positivity bias. Or, since the Vine reviews are such a small portion of the total reviews, we could loosen our initial filters. For instance, if we change the total_votes filter from >=20 to >=10, the dataset expands to 91,314 rows which allows us to filter further but adds more Vine reviews to the pool we are examining.
